@@ -1,4 +1,4 @@
-package com.github.Higman.simple_function_data_library
+package com.github.Higman.simple_functiondata_library
 
 import java.lang.RuntimeException
 
