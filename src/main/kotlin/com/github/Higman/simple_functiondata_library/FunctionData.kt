@@ -8,6 +8,9 @@ data class FunctionData(val degree: Int, private val func: (List<Double>) -> Dou
         if (degree < 1) throw IllegalArgumentException("dimensiton >= 1 でなければなりません")
     }
     fun calc(xs: VecData): Double = degree.let {if (it == xs.degree) func(xs.value) else throw IllegalDegreeException() }
+    override fun toString(): String {
+        return "FunctionData(degree=$degree)"
+    }
 }
 
 class IllegalDegreeException: RuntimeException()
