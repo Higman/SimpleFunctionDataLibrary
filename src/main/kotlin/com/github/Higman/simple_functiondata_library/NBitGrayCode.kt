@@ -45,7 +45,7 @@ open class NBitGrayCode(
 
     override fun compareTo(other: NBitGrayCode): Int = this.toInt() - other.toInt()
 
-    override fun clone(): NBitGrayCode {
+    public override fun clone(): NBitGrayCode {
         val c = kotlin.runCatching {
             super.clone() as NBitGrayCode
         }.fold(
