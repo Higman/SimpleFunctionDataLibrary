@@ -1,12 +1,13 @@
 package com.github.Higman.simple_functiondata_library
 
+import java.lang.RuntimeException
 import kotlin.math.pow
 
-class NBitGrayCode(
+open class NBitGrayCode(
     initVal: List<Int> = listOf(),
     bitSize: Int = initVal.size
-) : Number(), Comparable<NBitGrayCode> {
-    val bits: MutableList<Int> = initVal.toMutableList()
+) : Number(), Comparable<NBitGrayCode>, Cloneable {
+    var bits: MutableList<Int> = initVal.toMutableList()
     val bitSize: Int
         get() = bits.size
 
@@ -17,12 +18,14 @@ class NBitGrayCode(
 
     private fun decode(): Int = _decode(bits, bits.lastIndex)
 
-
     private fun _decode(grayCode: List<Int>, n: Int): Int {
         return if (n < 1) {
             grayCode[0]
         } else {
-            if (grayCode[n] == 0) _decode(grayCode, n - 1) else ((2.0.pow(n + 1) - 1) - _decode(grayCode, n - 1)).toInt()
+            if (grayCode[n] == 0) _decode(grayCode, n - 1) else ((2.0.pow(n + 1) - 1) - _decode(
+                grayCode,
+                n - 1
+            )).toInt()
         }
     }
 
@@ -41,4 +44,15 @@ class NBitGrayCode(
     override fun toShort(): Short = decode().toShort()
 
     override fun compareTo(other: NBitGrayCode): Int = this.toInt() - other.toInt()
+
+    override fun clone(): NBitGrayCode {
+        val c = kotlin.runCatching {
+            super.clone() as NBitGrayCode
+        }.fold(
+            onSuccess = { it },
+            onFailure = { throw RuntimeException("Failed to clone in ${this::class.qualifiedName}")}
+        )
+        c.bits = bits.toMutableList()
+        return c
+    }
 }
