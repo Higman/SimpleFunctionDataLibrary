@@ -30,7 +30,7 @@ class DataWithHistory<T>(currentData : T? = null): Cloneable {
         return "DataWithHistory(data=$_data)"
     }
 
-    override fun clone(): DataWithHistory<T> {
+    public override fun clone(): DataWithHistory<T> {
         val dwh = kotlin.runCatching {
             super.clone() as DataWithHistory<T>
         }.fold(
